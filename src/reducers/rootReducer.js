@@ -54,6 +54,18 @@ const initState = {
 }
 
 const rootReducer = (state = initState, action) => {
+  if (action.type === "delAccount") {
+    let newAccounts = state.accounts.filter(account => account.id !== action.id);
+    return {
+      ...state, accounts: newAccounts
+    }
+  }
+  if (action.type === "addAccount") {
+    action.account.id = Math.random();
+    return {
+      ...state, accounts: [...state.accounts, action.account]
+    }
+  }
   return state
 }
 

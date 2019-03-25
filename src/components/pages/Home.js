@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
+import { delAccount } from "../../actions/crud"
 import "./Home.css"
 
 class Home extends Component {
+  delAccount = (id) => {
+    this.props.delAccount(id)
+  }
+
   render() {
     const { accounts } = this.props
     const account = accounts.length ? (
@@ -31,7 +36,8 @@ class Home extends Component {
                   edit
                 </a> 
                 <button
-                  className="btn btn-smallwaves-effect red lighten-2 right"
+                  className="btn btn-small waves-effect red lighten-2 right"
+                  onClick={() => this.delAccount(account.id)}
                 >
                   delete
                 </button>
@@ -40,7 +46,11 @@ class Home extends Component {
           )
         })
       ) : (
-        <div>No Data...</div>
+        <tr>
+          <td colSpan="9" className="center-align">
+            No data to view...
+          </td>
+        </tr>
       )
 
     return (
@@ -84,4 +94,12 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(Home);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    delAccount: (id) => {
+      dispatch(delAccount(id))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
