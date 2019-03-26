@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux"
+import { getCountry } from "../../actions/crud"
+// import axios from "axios"
 
 class About extends Component {
   constructor(props) {
@@ -15,7 +18,19 @@ class About extends Component {
       cname: "",
       fname: "",
       lname: ""
+      // countrys: []
     }
+  }
+
+  // componentDidMount() {
+  //   axios.get("https://restcountries.eu/rest/v2/all")
+  //     .then(res => this.setState({
+  //       countrys: res.data
+  //     }))
+  // }
+
+  componentWillMount() {
+    this.getCountry()
   }
 
   handleChange = (e) => {
@@ -24,7 +39,26 @@ class About extends Component {
     })
   }
 
+  getCountry = () => {
+    this.props.getCountry()
+  }
+
   render() {
+    const { countrys } = this.props
+    console.log(countrys)
+
+    // const listCountry = this.state.countrys.map(country => {
+    //   return (
+    //     <option key={country.numericCode} value={country.name}>{country.name}</option>
+    //   )
+    // })
+
+    // const listCurrency = this.state.countrys.map(country => {
+    //   return (
+    //     <option key={country.numericCode} value={country.currencies[0].code}>{country.currencies[0].code}</option>
+    //   )
+    // })
+
     return (
       <div className="container">
         <div className="row">
@@ -91,6 +125,34 @@ class About extends Component {
                       required
                     />
                     <label htmlFor="city">City</label>
+                  </li>
+                  <li>
+                    <label htmlFor="country">Browser Country</label>
+                    <div className="input-field">
+                      <select
+                        name="country"
+                        id="country"
+                        className="browser-default"
+                        value={this.state.country}
+                        onChange={this.handleChange}
+                      >
+                        {/* {listCountry} */}
+                      </select>
+                    </div>
+                  </li>
+                  <li>
+                    <label htmlFor="currency">Browser Currency</label>
+                    <div className="input-field">
+                      <select
+                        name="currency"
+                        id="currency"
+                        className="browser-default"
+                        value={this.state.currency}
+                        onChange={this.handleChange}
+                      >
+                        {/* {listCurrency} */}
+                      </select>
+                    </div>
                   </li>
                   <li className="input-field">
                     <p>
@@ -167,6 +229,13 @@ class About extends Component {
                       )
                     )
                   }
+                  <li>
+                    <button
+                      className="btn waves-effect red lighten-2 right"
+                    >
+                      Add
+                    </button>
+                  </li>
                 </ul>
               </form>
               <div>
@@ -176,6 +245,7 @@ class About extends Component {
                 <p>{this.state.address}</p>
                 <p>{this.state.city}</p>
                 <p>{this.state.country}</p>
+                {/* <p>{this.state.countrys}</p> */}
                 <p>{this.state.currency}</p>
                 <p>{this.state.type}</p>
                 {
@@ -194,4 +264,18 @@ class About extends Component {
   }
 }
 
-export default About;
+const mapStateToProps = (state) => {
+  return {
+    countrys: state.countrys
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getCountry: () => {
+      dispatch(getCountry())
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(About);

@@ -50,7 +50,9 @@ const initState = {
       type: "company",
       cname: "pt asindo tech"
     },
-  ]
+  ],
+
+  countrys: []
 }
 
 const rootReducer = (state = initState, action) => {
@@ -64,6 +66,12 @@ const rootReducer = (state = initState, action) => {
     action.account.id = Math.random();
     return {
       ...state, accounts: [...state.accounts, action.account]
+    }
+  }
+  if (action.type === "getCountry") {
+    console.log("reducer")
+    return {
+      ...state, countrys: action.countrys
     }
   }
   return state
