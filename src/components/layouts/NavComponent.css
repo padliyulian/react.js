@@ -1,0 +1,5 @@
+@media screen and (min-width:600px) {
+  div.navbar {
+    margin-bottom: 20px;
+  }
+}
