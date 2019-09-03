@@ -1,0 +1,6 @@
+export const GET_ACCOUNTS = "GET_ACCOUNTS"
+export const GET_COUNTRYS = "GET_COUNTRYS"
+export const ADD_ACCOUNT = "ADD_ACCOUNT"
+export const DEL_ACCOUNT = "DEL_ACCOUNT"
+export const DETAIL_ACCOUNT = "DETAIL_ACCOUNT"
+export const UPDATE_ACCOUNT = "UPDATE_ACCOUNT"
