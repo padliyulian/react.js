@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
-import { getAccounts, delAccount } from "../../actions/accountActions"
+import { getAccounts, delAccount } from "../../actions/"
 import AccountComp from "./AccountComp"
 
 class AccountCont extends Component {

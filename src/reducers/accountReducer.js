@@ -1,12 +1,4 @@
-import {
-  GET_ACCOUNTS,
-  GET_COUNTRYS,
-  ADD_ACCOUNT,
-  DEL_ACCOUNT,
-  DETAIL_ACCOUNT,
-  UPDATE_ACCOUNT
-} from "../actions/types"
-
+import * as actionTypes from "../actions/types"
 import accounts from "./accounts"
 
 const initState = {
@@ -17,30 +9,30 @@ const initState = {
 
 export default function (state = initState, action) {
   switch (action.type) {
-    case GET_ACCOUNTS:
+    case actionTypes.GET_ACCOUNTS:
       return {
         ...state,
         // accounts: action.payload
         accounts: state.accounts
       }
-    case GET_COUNTRYS:
+    case actionTypes.GET_COUNTRYS:
       return {
         ...state,
         countrys: action.countrys
       }  
-    case ADD_ACCOUNT:
+    case actionTypes.ADD_ACCOUNT:
       action.newAccount.id = Math.random()
       return {
         ...state,
         accounts: [...state.accounts, action.newAccount]
       }
-    case DEL_ACCOUNT:
+    case actionTypes.DEL_ACCOUNT:
       let newAccounts = state.accounts.filter(account => account.id !== action.id)
       return {
         ...state,
         accounts: newAccounts
       }
-    case DETAIL_ACCOUNT:
+    case actionTypes.DETAIL_ACCOUNT:
       let findAccount = state.accounts.find(account => {
         return account.id === parseFloat(action.id)
       })
@@ -48,7 +40,7 @@ export default function (state = initState, action) {
         ...state,
         account: findAccount
       }  
-    case UPDATE_ACCOUNT:
+    case actionTypes.UPDATE_ACCOUNT:
       const newData = state.accounts.filter(account => {
         if(account.id === action.account.id) {
           account.name = action.account.name
