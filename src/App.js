@@ -2,6 +2,7 @@ import React from "react"
 import { BrowserRouter, Route, Switch } from "react-router-dom"
 import MetaTags from "react-meta-tags"
 import Navbar from "./components/layouts/NavContainer"
+import Footer from "./components/layouts/Footer"
 import Home from "./pages/Home"
 import Add from "./pages/Add"
 import detailAccount from "./components/account/DatailAccountCont"
@@ -22,12 +23,13 @@ function App() {
         <main>
           <Switch>
             <Route path="/" component={Home} exact />
-            <Route path="/add" component={Add} exact />
-            <Route path="/account/:id" component={detailAccount} exact />
-            <Route path="/editAccount/:id" component={editAccount} exact />
+            <Route path="/add" component={Add} />
+            <Route path="/account/:id" component={detailAccount} />
+            <Route path="/editAccount/:id" component={editAccount} />
             <Route component={Notfound} />
           </Switch>  
         </main>
+        <Footer />
       </div>
     </BrowserRouter>
   )

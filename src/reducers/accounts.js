@@ -1,3 +1,6 @@
+/*
+sample data
+*/
 const accounts = [
   {
     id: 1,
