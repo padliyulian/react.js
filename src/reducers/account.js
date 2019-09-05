@@ -1,5 +1,5 @@
 import * as actionTypes from "../actions/types"
-import accounts from "./accounts"
+import accounts from "./data"
 
 const initState = {
   accounts: accounts,
