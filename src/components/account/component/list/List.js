@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
 
-const AccountComp = (props) => {
+const List = (props) => {
 
   const { accounts, delAccount } = props
   const style = { overflow: "auto" }
@@ -53,28 +53,34 @@ const AccountComp = (props) => {
   }
 
   return (
-    <div style={style}>
-      <table>
-        <thead>
-          <tr>
-            <th className="center-align">No</th>
-            <th>Name</th>
-            <th>Number</th>
-            <th>Code</th>
-            <th>Address</th>
-            <th>City</th>
-            <th>Country</th>
-            <th>Currency</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          { account }
-        </tbody>
-      </table>
+    <div className="container">
+      <div className="row">
+        <div className="col s12">
+          <div style={style}>
+            <table>
+              <thead>
+                <tr>
+                  <th className="center-align">No</th>
+                  <th>Name</th>
+                  <th>Number</th>
+                  <th>Code</th>
+                  <th>Address</th>
+                  <th>City</th>
+                  <th>Country</th>
+                  <th>Currency</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                { account }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   )
 
 }
 
-export default AccountComp
+export default List

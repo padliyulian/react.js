@@ -1,7 +1,8 @@
 import React, { Component } from "react"
-import NavComponent from "./NavComponent"
+import NavbarList from "../component/NavbarList"
+import "./Navbar"
 
-class NavContainer extends Component {
+class Navbar extends Component {
   state = {
     links: [
       {
@@ -25,8 +26,8 @@ class NavContainer extends Component {
   }
 
   render() {
-    return <NavComponent links={this.state.links} />
+    return <NavbarList links={this.state.links} />
   }
 } 
 
-export default NavContainer
+export default Navbar

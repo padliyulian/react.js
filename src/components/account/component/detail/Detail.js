@@ -1,6 +1,6 @@
 import React from "react"
 
-const DetailAccountComp = (props) => {
+const Detail = (props) => {
 
   const { account, handleClick } = props
   const style = { fontWeight: "bold" }
@@ -78,4 +78,4 @@ const DetailAccountComp = (props) => {
 
 }
 
-export default DetailAccountComp
+export default Detail

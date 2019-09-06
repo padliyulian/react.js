@@ -1,8 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import "./NavComponent.css"
 
-const NavComponent = (props) => {
+const NavbarList = (props) => {
   const { links } = props
   const link = links.map(link => {
     return (
@@ -13,6 +12,7 @@ const NavComponent = (props) => {
       </li>
     )
   })
+
   const moblink = links.map(link => {
     return (
       <li className="js-navbar__box" key={link.id}>
@@ -48,4 +48,4 @@ const NavComponent = (props) => {
   )
 }
 
-export default NavComponent
+export default NavbarList

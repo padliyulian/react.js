@@ -1,10 +1,10 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
-import { addAccount, getCountrys } from "../../actions/"
-import AddAccountComp from "./AddAccountComp"
+import { addAccount, getCountrys } from "../../../../actions"
+import AddAccount from "../../component/form/Add"
 
-class AddAccountCont extends Component {
+export class Add extends Component {
   state = {
     info: false,
     newAccount: {
@@ -42,8 +42,10 @@ class AddAccountCont extends Component {
     e.preventDefault()
     this.props.addAccount(this.state.newAccount)
     this.setState({info: true})
-    setTimeout(() => this.clearState(), 5000)
-    // this.props.history.push("/")
+    setTimeout(() => {
+      this.clearState()
+      this.props.back.push("/")
+    }, 5000)
   }
 
   clearState = () => {
@@ -67,7 +69,7 @@ class AddAccountCont extends Component {
 
   render() {
     return (
-      <AddAccountComp
+      <AddAccount
         info={this.state.info}
         data={this.state.newAccount}
         countrys={this.props.countrys}
@@ -78,7 +80,7 @@ class AddAccountCont extends Component {
   }
 }
 
-AddAccountCont.propTypes = {
+Add.propTypes = {
   addAccount: PropTypes.func.isRequired,
   getCountrys: PropTypes.func.isRequired,
   countrys: PropTypes.array.isRequired
@@ -88,4 +90,4 @@ const mapStateToProps = state => ({
   countrys: state.accounts.countrys
 })
 
-export default connect(mapStateToProps, { addAccount, getCountrys })(AddAccountCont)
+export default connect(mapStateToProps, { addAccount, getCountrys })(Add)

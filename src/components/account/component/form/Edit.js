@@ -1,7 +1,7 @@
 import React from "react"
-import Info from "./Info"
+import Info from "../message/Info"
 
-const EditAccountComp = (props) => {
+const Edit = (props) => {
 
   const { info, data, countrys, handleChange, handleSubmit } = props
   const listCountry = countrys.map(country => {
@@ -219,4 +219,4 @@ const EditAccountComp = (props) => {
 
 }
 
-export default EditAccountComp
+export default Edit

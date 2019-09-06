@@ -1,13 +1,13 @@
 import React from "react"
 import { BrowserRouter, Route, Switch } from "react-router-dom"
 import MetaTags from "react-meta-tags"
-import Navbar from "./components/layouts/NavContainer"
-import Footer from "./components/layouts/Footer"
-import Home from "./pages/Home"
-import Add from "./pages/Add"
-import detailAccount from "./components/account/DatailAccountCont"
-import editAccount from "./components/account/EditAccountCont"
-import Notfound from "./pages/Notfound"
+import { Navbar } from "./components/layouts"
+import { Footer } from "./components/layouts"
+import { List } from "./pages/"
+import { Add } from "./pages/"
+import { Edit } from "./pages/"
+import { Detail } from "./pages"
+import { NotFound } from "./pages/"
 
 function App() {
   return (
@@ -22,11 +22,11 @@ function App() {
         <Navbar />
         <main>
           <Switch>
-            <Route path="/" component={Home} exact />
+            <Route path="/" component={List} exact />
             <Route path="/add" component={Add} />
-            <Route path="/account/:id" component={detailAccount} />
-            <Route path="/editAccount/:id" component={editAccount} />
-            <Route component={Notfound} />
+            <Route path="/account/:id" component={Detail} />
+            <Route path="/editAccount/:id" component={Edit} />
+            <Route component={NotFound} />
           </Switch>  
         </main>
         <Footer />

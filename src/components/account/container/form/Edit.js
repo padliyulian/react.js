@@ -1,10 +1,10 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
-import { updateAccount, getCountrys } from "../../actions/"
-import EditAccountComp from "./EditAccountComp"
+import { updateAccount, getCountrys } from "../../../../actions"
+import EditAccount from "../../component/form/Edit"
 
-class EditAccountCont extends Component {
+export class Edit extends Component {
 
   state = {
     info: false,
@@ -81,12 +81,12 @@ class EditAccountCont extends Component {
     this.props.updateAccount(this.state.newAccount)
     this.setState({info: true})
     setTimeout(() => this.clearState(), 4000)
-    setTimeout(() => this.props.history.push("/"), 5000)
+    setTimeout(() => this.props.back.push("/"), 5000)
   }
 
   render() {
     return (
-      <EditAccountComp
+      <EditAccount
         info={this.state.info}
         data={this.state.newAccount}
         countrys={this.props.countrys}
@@ -97,7 +97,7 @@ class EditAccountCont extends Component {
   }
 }
 
-EditAccountCont.propTypes = {
+Edit.propTypes = {
   updateAccount: PropTypes.func.isRequired,
   getCountrys: PropTypes.func.isRequired,
   countrys: PropTypes.array.isRequired
@@ -106,8 +106,8 @@ EditAccountCont.propTypes = {
 const mapStateToProps = (state, ownProps) => ({
   countrys: state.accounts.countrys,
   account: state.accounts.accounts.find(account => {
-    return account.id === parseFloat(ownProps.match.params.id)
+    return account.id === parseFloat(ownProps.id)
   })
 })
 
-export default connect(mapStateToProps, { updateAccount, getCountrys })(EditAccountCont)
+export default connect(mapStateToProps, { updateAccount, getCountrys })(Edit)
