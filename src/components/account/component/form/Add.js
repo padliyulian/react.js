@@ -3,7 +3,8 @@ import Info from "../message/Info"
 
 const Add = (props) => {
 
-  const { info, data, countrys, handleSubmit, handleChange } = props
+  const { info, data, countrys, handleSubmit, handleChange, error, handleValidate } = props
+  const style = { color: 'red' }
   const listCountry = countrys.map(country => {
     return (
       <option
@@ -43,9 +44,10 @@ const Add = (props) => {
                     name="name"
                     value={data.name}
                     onChange={handleChange}
-                    required
+                    onBlur={handleValidate}
                   />
                   <label htmlFor="name">Name</label>
+                  {error.name && <p style={style}>Name is required</p>}
                 </li>
                 <li className="input-field">
                   <i className="material-icons prefix">fingerprint</i>
@@ -55,9 +57,10 @@ const Add = (props) => {
                     name="number"
                     value={data.number}
                     onChange={handleChange}
-                    required
+                    onBlur={handleValidate}
                   />
                   <label htmlFor="number">Number</label>
+                  {error.number && <p style={style}>Number is required</p>}
                 </li>
                 <li className="input-field">
                   <i className="material-icons prefix">vpn_key</i>
@@ -67,9 +70,10 @@ const Add = (props) => {
                     name="code"
                     value={data.code}
                     onChange={handleChange}
-                    required
+                    onBlur={handleValidate}
                   />
                   <label htmlFor="code">Code</label>
+                  {error.code && <p style={style}>Code is required</p>}
                 </li>
                 <li className="input-field">
                   <i className="material-icons prefix">location_on</i>
@@ -79,9 +83,10 @@ const Add = (props) => {
                     name="address"
                     value={data.address}
                     onChange={handleChange}
-                    required
+                    onBlur={handleValidate}
                   />
                   <label htmlFor="address">Address</label>
+                  {error.address && <p style={style}>Address is required</p>}
                 </li>
                 <li className="input-field">
                   <i className="material-icons prefix">location_city</i>
@@ -91,9 +96,10 @@ const Add = (props) => {
                     name="city"
                     value={data.city}
                     onChange={handleChange}
-                    required
+                    onBlur={handleValidate}
                   />
                   <label htmlFor="city">City</label>
+                  {error.city && <p style={style}>City is required</p>}
                 </li>
                 <li>
                   <label htmlFor="country">Country</label>
@@ -104,11 +110,13 @@ const Add = (props) => {
                       className="browser-default"
                       value={data.country}
                       onChange={handleChange}
+                      onBlur={handleValidate}
                     >
                       <option value="" disabled>--select country--</option>
                       {listCountry}
                     </select>
                   </div>
+                  {error.county && <p style={style}>County is required</p>}
                 </li>
                 <li>
                   <label htmlFor="currency">Currency</label>
@@ -119,11 +127,13 @@ const Add = (props) => {
                       className="browser-default"
                       value={data.currency}
                       onChange={handleChange}
+                      onBlur={handleValidate}
                     >
                       <option value="" disabled>--select curency--</option>
                       {listCurrency}
                     </select>
                   </div>
+                  {error.currency && <p style={style}>Currency is required</p>}
                 </li>
                 <li className="input-field">
                   <fieldset>
@@ -155,6 +165,7 @@ const Add = (props) => {
                     </label>
                   </p>
                   </fieldset>
+                  {error.type && <p style={style}>Type is required</p>}
                 </li>
                 {
                   data.type === "" ? "" : (

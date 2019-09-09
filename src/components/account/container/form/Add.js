@@ -19,11 +19,44 @@ export class Add extends Component {
       cname: "",
       fname: "",
       lname: ""
+    },
+    error: {
+      name: false,
+      number: false,
+      code: false,
+      address: false,
+      city: false,
+      country: false,
+      currency: false,
+      type: false,
     }
   }
 
   componentWillMount() {
     this.props.getCountrys();
+  }
+
+  handleValidate = (event) => {
+    const {name, value} = event.target
+    if (value === '') {
+      this.setState(prevState => {
+        return {
+          error : {
+            ...prevState.error,
+            [name]: true
+          }
+        }
+      })
+    } else {
+      this.setState(prevState => {
+        return {
+          error : {
+            ...prevState.error,
+            [name]: false
+          }
+        }
+      })
+    }
   }
 
   handleChange = (event) => {
@@ -70,11 +103,13 @@ export class Add extends Component {
   render() {
     return (
       <AddAccount
+        error={this.state.error}
         info={this.state.info}
         data={this.state.newAccount}
         countrys={this.props.countrys}
         handleChange={this.handleChange}
         handleSubmit={this.handleSubmit}
+        handleValidate={this.handleValidate}
       />
     )
   }
