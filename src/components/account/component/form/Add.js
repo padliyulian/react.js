@@ -116,7 +116,7 @@ const Add = (props) => {
                       {listCountry}
                     </select>
                   </div>
-                  {error.county && <p style={style}>County is required</p>}
+                  {error.country && <p style={style}>Country is required</p>}
                 </li>
                 <li>
                   <label htmlFor="currency">Currency</label>
@@ -178,9 +178,9 @@ const Add = (props) => {
                           name="cname"
                           value={data.cname}
                           onChange={handleChange}
-                          required
                         />
                         <label htmlFor="cname">Company Name</label>
+                        {error.cname && <p style={style}>Compnay name is required</p>}
                       </li>
                     ) : (
                         <li>
@@ -193,9 +193,9 @@ const Add = (props) => {
                                 name="fname"
                                 value={data.fname}
                                 onChange={handleChange}
-                                required
                               />
                               <label htmlFor="fname">Firts Name</label>
+                              {error.fname && <p style={style}>First name is required</p>}
                             </div>
                             <div className="col s6 input-field">
                               <i className="material-icons prefix">person</i>
@@ -205,7 +205,6 @@ const Add = (props) => {
                                 name="lname"
                                 value={data.lname}
                                 onChange={handleChange}
-                                required
                               />
                               <label htmlFor="lname">Last Name</label>
                             </div>

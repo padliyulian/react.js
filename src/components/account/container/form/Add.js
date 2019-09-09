@@ -18,7 +18,7 @@ export class Add extends Component {
       type: "",
       cname: "",
       fname: "",
-      lname: ""
+      lname: "",
     },
     error: {
       name: false,
@@ -29,6 +29,8 @@ export class Add extends Component {
       country: false,
       currency: false,
       type: false,
+      cname: false,
+      fname: false,
     }
   }
 
@@ -73,12 +75,114 @@ export class Add extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    this.props.addAccount(this.state.newAccount)
-    this.setState({info: true})
-    setTimeout(() => {
-      this.clearState()
-      this.props.back.push("/")
-    }, 5000)
+
+    Object.keys(this.state.newAccount).map(key => {
+      return this.state.newAccount[key] === '' && this.setState(prevState => {
+        return {
+          error: {
+            ...prevState.error,
+            [key]: true
+          }
+        }
+      })
+    })
+
+    return console.log(this.state.newAccount)
+
+    // if (this.state.newAccount.name === '') {
+    //   this.setState(prevState => {
+    //     return {
+    //       error: {
+    //         ...prevState.error,
+    //         name: true
+    //       }
+    //     }
+    //   })
+    // }
+
+    // if (this.state.newAccount.number === '') {
+    //   this.setState(prevState => {
+    //     return {
+    //       error: {
+    //         ...prevState.error,
+    //         number: true
+    //       }
+    //     }
+    //   })
+    // }
+
+    // if (this.state.newAccount.code === '') {
+    //   this.setState(prevState => {
+    //     return {
+    //       error: {
+    //         ...prevState.error,
+    //         code: true
+    //       }
+    //     }
+    //   })
+    // }
+
+    // if (this.state.newAccount.address === '') {
+    //   this.setState(prevState => {
+    //     return {
+    //       error: {
+    //         ...prevState.error,
+    //         address: true
+    //       }
+    //     }
+    //   })
+    // }
+
+    // if (this.state.newAccount.city === '') {
+    //   this.setState(prevState => {
+    //     return {
+    //       error: {
+    //         ...prevState.error,
+    //         city: true
+    //       }
+    //     }
+    //   })
+    // }
+
+    // if (this.state.newAccount.country === '') {
+    //   this.setState(prevState => {
+    //     return {
+    //       error: {
+    //         ...prevState.error,
+    //         country: true
+    //       }
+    //     }
+    //   })
+    // }
+
+    // if (this.state.newAccount.currency === '') {
+    //   this.setState(prevState => {
+    //     return {
+    //       error: {
+    //         ...prevState.error,
+    //         currency: true
+    //       }
+    //     }
+    //   })
+    // }
+
+    // if (this.state.newAccount.type === '') {
+    //   this.setState(prevState => {
+    //     return {
+    //       error: {
+    //         ...prevState.error,
+    //         type: true
+    //       }
+    //     }
+    //   })
+    // }
+
+    // this.props.addAccount(this.state.newAccount)
+    // this.setState({info: true})
+    // setTimeout(() => {
+    //   this.clearState()
+    //   this.props.back.push("/")
+    // }, 5000)
   }
 
   clearState = () => {
