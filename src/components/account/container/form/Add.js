@@ -7,7 +7,6 @@ import AddAccount from "../../component/form/Add"
 export class Add extends Component {
   state = {
     info: false,
-    isValid: false,
     newAccount: {
       name: "",
       number: "",
@@ -74,33 +73,12 @@ export class Add extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-
-    Object.keys(this.state.newAccount).map(key => {
-      return this.state.newAccount[key] === '' && this.setState(prevState => {
-        return {
-          error: {
-            ...prevState.error,
-            [key]: true
-          }
-        }
-      })
-    })
-
-    Object.keys(this.state.newAccount).map(key => {
-      if (this.state.newAccount[key] !== '') {
-        this.setState({isValid: true})
-      }
-      return this.state
-    })
-
-    this.state.isValid && console.log(this.state.newAccount)
-
-    // this.props.addAccount(this.state.newAccount)
-    // this.setState({info: true})
-    // setTimeout(() => {
-    //   this.clearState()
-    //   this.props.back.push("/")
-    // }, 5000)
+    this.props.addAccount(this.state.newAccount)
+    this.setState({info: true})
+    setTimeout(() => {
+      this.clearState()
+      this.props.back.push("/")
+    }, 5000)
   }
 
   clearState = () => {
@@ -118,6 +96,16 @@ export class Add extends Component {
         cname: "",
         fname: "",
         lname: ""
+      },
+      error: {
+        name: false,
+        number: false,
+        code: false,
+        address: false,
+        city: false,
+        country: false,
+        currency: false,
+        type: false,
       }
     })
   }
