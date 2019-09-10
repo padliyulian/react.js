@@ -7,6 +7,7 @@ import AddAccount from "../../component/form/Add"
 export class Add extends Component {
   state = {
     info: false,
+    isValid: false,
     newAccount: {
       name: "",
       number: "",
@@ -29,8 +30,6 @@ export class Add extends Component {
       country: false,
       currency: false,
       type: false,
-      cname: false,
-      fname: false,
     }
   }
 
@@ -87,95 +86,14 @@ export class Add extends Component {
       })
     })
 
-    return console.log(this.state.newAccount)
+    Object.keys(this.state.newAccount).map(key => {
+      if (this.state.newAccount[key] !== '') {
+        this.setState({isValid: true})
+      }
+      return this.state
+    })
 
-    // if (this.state.newAccount.name === '') {
-    //   this.setState(prevState => {
-    //     return {
-    //       error: {
-    //         ...prevState.error,
-    //         name: true
-    //       }
-    //     }
-    //   })
-    // }
-
-    // if (this.state.newAccount.number === '') {
-    //   this.setState(prevState => {
-    //     return {
-    //       error: {
-    //         ...prevState.error,
-    //         number: true
-    //       }
-    //     }
-    //   })
-    // }
-
-    // if (this.state.newAccount.code === '') {
-    //   this.setState(prevState => {
-    //     return {
-    //       error: {
-    //         ...prevState.error,
-    //         code: true
-    //       }
-    //     }
-    //   })
-    // }
-
-    // if (this.state.newAccount.address === '') {
-    //   this.setState(prevState => {
-    //     return {
-    //       error: {
-    //         ...prevState.error,
-    //         address: true
-    //       }
-    //     }
-    //   })
-    // }
-
-    // if (this.state.newAccount.city === '') {
-    //   this.setState(prevState => {
-    //     return {
-    //       error: {
-    //         ...prevState.error,
-    //         city: true
-    //       }
-    //     }
-    //   })
-    // }
-
-    // if (this.state.newAccount.country === '') {
-    //   this.setState(prevState => {
-    //     return {
-    //       error: {
-    //         ...prevState.error,
-    //         country: true
-    //       }
-    //     }
-    //   })
-    // }
-
-    // if (this.state.newAccount.currency === '') {
-    //   this.setState(prevState => {
-    //     return {
-    //       error: {
-    //         ...prevState.error,
-    //         currency: true
-    //       }
-    //     }
-    //   })
-    // }
-
-    // if (this.state.newAccount.type === '') {
-    //   this.setState(prevState => {
-    //     return {
-    //       error: {
-    //         ...prevState.error,
-    //         type: true
-    //       }
-    //     }
-    //   })
-    // }
+    this.state.isValid && console.log(this.state.newAccount)
 
     // this.props.addAccount(this.state.newAccount)
     // this.setState({info: true})

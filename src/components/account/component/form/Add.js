@@ -147,6 +147,7 @@ const Add = (props) => {
                           type="radio"
                           checked={data.type === "individual"}
                           onChange={handleChange}
+                          onBlur={handleValidate}
                         />
                         <span>Individual</span>
                       </label>
@@ -160,6 +161,7 @@ const Add = (props) => {
                         type="radio"
                         checked={data.type === "company"}
                         onChange={handleChange}
+                        onBlur={handleValidate}
                       />
                       <span>Company</span>
                     </label>
@@ -180,7 +182,6 @@ const Add = (props) => {
                           onChange={handleChange}
                         />
                         <label htmlFor="cname">Company Name</label>
-                        {error.cname && <p style={style}>Compnay name is required</p>}
                       </li>
                     ) : (
                         <li>
@@ -195,7 +196,6 @@ const Add = (props) => {
                                 onChange={handleChange}
                               />
                               <label htmlFor="fname">Firts Name</label>
-                              {error.fname && <p style={style}>First name is required</p>}
                             </div>
                             <div className="col s6 input-field">
                               <i className="material-icons prefix">person</i>
