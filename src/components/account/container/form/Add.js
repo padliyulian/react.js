@@ -7,73 +7,14 @@ import AddAccount from "../../component/form/Add"
 export class Add extends Component {
   state = {
     info: false,
-    newAccount: {
-      name: "",
-      number: "",
-      code: "",
-      address: "",
-      city: "",
-      country: "",
-      currency: "",
-      type: "",
-      cname: "",
-      fname: "",
-      lname: "",
-    },
-    error: {
-      name: false,
-      number: false,
-      code: false,
-      address: false,
-      city: false,
-      country: false,
-      currency: false,
-      type: false,
-    }
   }
 
   componentWillMount() {
     this.props.getCountrys();
   }
 
-  handleValidate = (event) => {
-    const {name, value} = event.target
-    if (value === '') {
-      this.setState(prevState => {
-        return {
-          error : {
-            ...prevState.error,
-            [name]: true
-          }
-        }
-      })
-    } else {
-      this.setState(prevState => {
-        return {
-          error : {
-            ...prevState.error,
-            [name]: false
-          }
-        }
-      })
-    }
-  }
-
-  handleChange = (event) => {
-    const {name, value} = event.target
-    this.setState(prevState => {
-      return {
-        newAccount : {
-          ...prevState.newAccount,
-          [name]: value
-        }
-      }
-    })
-  }
-
-  handleSubmit = (e) => {
-    e.preventDefault()
-    this.props.addAccount(this.state.newAccount)
+  handleSubmit = (values) => {
+    this.props.addAccount(values)
     this.setState({info: true})
     setTimeout(() => {
       this.clearState()
@@ -82,44 +23,15 @@ export class Add extends Component {
   }
 
   clearState = () => {
-    this.setState({
-      info: false,
-      newAccount: {
-        name: "",
-        number: "",
-        code: "",
-        address: "",
-        city: "",
-        country: "",
-        currency: "",
-        type: "",
-        cname: "",
-        fname: "",
-        lname: ""
-      },
-      error: {
-        name: false,
-        number: false,
-        code: false,
-        address: false,
-        city: false,
-        country: false,
-        currency: false,
-        type: false,
-      }
-    })
+    this.setState({info: false})
   }
 
   render() {
     return (
       <AddAccount
-        error={this.state.error}
         info={this.state.info}
-        data={this.state.newAccount}
         countrys={this.props.countrys}
-        handleChange={this.handleChange}
         handleSubmit={this.handleSubmit}
-        handleValidate={this.handleValidate}
       />
     )
   }

@@ -1,9 +1,24 @@
 import React from "react"
 import Info from "../message/Info"
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from "yup";
 
 const Add = (props) => {
 
-  const { info, data, countrys, handleSubmit, handleChange, error, handleValidate } = props
+  const InputSchema = Yup.object().shape({
+    name: Yup.string().required(),
+    number: Yup.string().required(),
+    code: Yup.string().required(),
+    address: Yup.string().required(),
+    city: Yup.string().required(),
+    country: Yup.string().required(),
+    currency: Yup.string().required(),
+    type: Yup.string().required(),
+    cname: Yup.string(),
+    fname: Yup.string(),
+    lname: Yup.string(),
+  });
+  const { info, countrys, handleSubmit } = props
   const style = { color: 'red' }
   const listCountry = countrys.map(country => {
     return (
@@ -15,7 +30,6 @@ const Add = (props) => {
       </option>
     )
   })
-
   const listCurrency = countrys.map(country => {
     return (
       <option
@@ -34,153 +48,106 @@ const Add = (props) => {
           <div>
             { info === true && <Info info="Add" /> }
 
-            <form onSubmit={handleSubmit}>
+            <Formik
+              initialValues={{
+                name: '',
+                number: '',
+                code: '',
+                address: '',
+                city: '',
+                country: '',
+                currency: '',
+                type: '',
+                cname: '',
+                fname: '',
+                lname: '',
+              }}
+              validationSchema={InputSchema}
+              onSubmit={
+                (values) => {
+                  handleSubmit(values)
+                }
+              }
+            > 
+
+            {(InputSchema) => (
+            <Form>
               <ul>
                 <li className="input-field">
                   <i className="material-icons prefix">person</i>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={data.name}
-                    onChange={handleChange}
-                    onBlur={handleValidate}
-                  />
+                  <Field type="text" name="name" />
+                  <ErrorMessage style={style} name="name" component="div" />
                   <label htmlFor="name">Name</label>
-                  {error.name && <p style={style}>Name is required</p>}
                 </li>
                 <li className="input-field">
                   <i className="material-icons prefix">fingerprint</i>
-                  <input
-                    type="text"
-                    id="number"
-                    name="number"
-                    value={data.number}
-                    onChange={handleChange}
-                    onBlur={handleValidate}
-                  />
+                  <Field type="text" name="number" />
+                  <ErrorMessage style={style} name="number" component="div" />
                   <label htmlFor="number">Number</label>
-                  {error.number && <p style={style}>Number is required</p>}
                 </li>
                 <li className="input-field">
                   <i className="material-icons prefix">vpn_key</i>
-                  <input
-                    type="text"
-                    id="code"
-                    name="code"
-                    value={data.code}
-                    onChange={handleChange}
-                    onBlur={handleValidate}
-                  />
+                  <Field type="text" name="code" />
+                  <ErrorMessage style={style} name="code" component="div" />
                   <label htmlFor="code">Code</label>
-                  {error.code && <p style={style}>Code is required</p>}
                 </li>
                 <li className="input-field">
                   <i className="material-icons prefix">location_on</i>
-                  <input
-                    type="text"
-                    id="address"
-                    name="address"
-                    value={data.address}
-                    onChange={handleChange}
-                    onBlur={handleValidate}
-                  />
+                  <Field type="text" name="address" />
+                  <ErrorMessage style={style} name="address" component="div" />
                   <label htmlFor="address">Address</label>
-                  {error.address && <p style={style}>Address is required</p>}
                 </li>
                 <li className="input-field">
                   <i className="material-icons prefix">location_city</i>
-                  <input
-                    type="text"
-                    id="city"
-                    name="city"
-                    value={data.city}
-                    onChange={handleChange}
-                    onBlur={handleValidate}
-                  />
+                  <Field type="text" name="city" />
+                  <ErrorMessage style={style} name="city" component="div" />
                   <label htmlFor="city">City</label>
-                  {error.city && <p style={style}>City is required</p>}
                 </li>
                 <li>
                   <label htmlFor="country">Country</label>
                   <div className="input-field">
-                    <select
-                      name="country"
-                      id="country"
-                      className="browser-default"
-                      value={data.country}
-                      onChange={handleChange}
-                      onBlur={handleValidate}
-                    >
+                    <Field className="browser-default" name="country" component="select">
                       <option value="" disabled>--select country--</option>
                       {listCountry}
-                    </select>
+                    </Field>
+                    <ErrorMessage style={style} name="country" component="div" />
                   </div>
-                  {error.country && <p style={style}>Country is required</p>}
                 </li>
                 <li>
                   <label htmlFor="currency">Currency</label>
                   <div className="input-field">
-                    <select
-                      name="currency"
-                      id="currency"
-                      className="browser-default"
-                      value={data.currency}
-                      onChange={handleChange}
-                      onBlur={handleValidate}
-                    >
-                      <option value="" disabled>--select curency--</option>
+                    <Field className="browser-default" name="currency" component="select">
+                      <option value="" disabled>--select currency--</option>
                       {listCurrency}
-                    </select>
+                    </Field>
+                    <ErrorMessage style={style} name="currency" component="div" />
                   </div>
-                  {error.currency && <p style={style}>Currency is required</p>}
                 </li>
                 <li className="input-field">
                   <fieldset>
                   <legend>Account Type</legend>  
                     <p>
                       <label>
-                        <input
-                          className="with-gap"
-                          name="type"
-                          value="individual"
-                          type="radio"
-                          checked={data.type === "individual"}
-                          onChange={handleChange}
-                          onBlur={handleValidate}
-                        />
+                        <Field className="with-gap" type="radio" name="type" value="individual" checked={InputSchema.values.type === "individual"} />
                         <span>Individual</span>
                       </label>
                     </p>
                     <p>
                     <label>
-                      <input
-                        className="with-gap"
-                        name="type"
-                        value="company"
-                        type="radio"
-                        checked={data.type === "company"}
-                        onChange={handleChange}
-                        onBlur={handleValidate}
-                      />
+                      <Field className="with-gap" type="radio" name="type" value="company" checked={InputSchema.values.type === "company"} />
                       <span>Company</span>
                     </label>
                   </p>
                   </fieldset>
-                  {error.type && <p style={style}>Type is required</p>}
+                  <ErrorMessage style={style} name="type" component="div" />
                 </li>
                 {
-                  data.type === "" ? "" : (
-                    data.type === "company" ? (
+                  InputSchema.values.type === "" ? "" : (
+                    InputSchema.values.type === "company" ? (
                       <li className="input-field">
                         <i className="material-icons prefix">build</i>
-                        <input
-                          type="text"
-                          id="cname"
-                          name="cname"
-                          value={data.cname}
-                          onChange={handleChange}
-                        />
+                        <Field type="text" name="cname" />
+                        <ErrorMessage style={style} name="cname" component="div" />
                         <label htmlFor="cname">Company Name</label>
                       </li>
                     ) : (
@@ -188,24 +155,14 @@ const Add = (props) => {
                           <div className="row">
                             <div className="col s6 input-field">
                               <i className="material-icons prefix">person</i>
-                              <input
-                                type="text"
-                                id="fname"
-                                name="fname"
-                                value={data.fname}
-                                onChange={handleChange}
-                              />
+                              <Field type="text" name="fname" />
+                              <ErrorMessage style={style} name="fname" component="div" />
                               <label htmlFor="fname">Firts Name</label>
                             </div>
                             <div className="col s6 input-field">
                               <i className="material-icons prefix">person</i>
-                              <input
-                                type="text"
-                                id="lname"
-                                name="lname"
-                                value={data.lname}
-                                onChange={handleChange}
-                              />
+                              <Field type="text" name="lname" />
+                              <ErrorMessage style={style} name="lname" component="div" />
                               <label htmlFor="lname">Last Name</label>
                             </div>
                           </div>
@@ -214,32 +171,32 @@ const Add = (props) => {
                   )
                 }
                 <li>
-                  <button
-                    className="btn waves-effect red lighten-2"
-                  >
-                    Add
-                  </button>
+                  <button type="submit" className="btn waves-effect red lighten-2">Add</button>
                 </li>
               </ul>
-            </form>
+            
+
             <div className="card-panel">
               <h6 className="center-align">Check Your Input Before Add</h6>
-              <p>Account Name : {data.name}</p>
-              <p>Account Number : {data.number}</p>
-              <p>Code : {data.code}</p>
-              <p>Address : {data.address}</p>
-              <p>City : {data.city}</p>
-              <p>Country : {data.country}</p>
-              <p>Currency : {data.currency}</p>
-              <p>Account Type : {data.type}</p>
+              <p>Account Name : {InputSchema.values.name}</p>
+              <p>Account Number : {InputSchema.values.number}</p>
+              <p>Code : {InputSchema.values.code}</p>
+              <p>Address : {InputSchema.values.address}</p>
+              <p>City : {InputSchema.values.city}</p>
+              <p>Country : {InputSchema.values.country}</p>
+              <p>Currency : {InputSchema.values.currency}</p>
+              <p>Account Type : {InputSchema.values.type}</p>
               {
-                data.type === "individual" ? (
-                  <p>Full Name : {data.fname} {data.lname}</p>
+                InputSchema.values.type === "individual" ? (
+                  <p>Full Name : {InputSchema.values.fname} {InputSchema.values.lname}</p>
                 ):(
-                  <p>Company Name : {data.cname}</p>
+                  <p>Company Name : {InputSchema.values.cname}</p>
                 )
               }
             </div>
+            </Form>
+            )}
+            </Formik> 
           </div>
         </div>
       </div>
