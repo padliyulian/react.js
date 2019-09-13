@@ -3,7 +3,8 @@ import Info from "../message/Info"
 
 const Edit = (props) => {
 
-  const { info, data, countrys, handleChange, handleSubmit } = props
+  const { info, data, countrys, handleChange, handleSubmit, handleValidation, error, isValid } = props
+  const style = {color: 'red'}
   const listCountry = countrys.map(country => {
     return <option key={country.numericCode} value={country.name}>{country.name}</option>
   })
@@ -36,9 +37,10 @@ const Edit = (props) => {
                       name="name"
                       defaultValue={data.name}
                       onChange={handleChange}
-                      required
+                      onBlur={handleValidation}
                     />
                   </div>
+                  {error.name && <p style={style}>Name is required</p>}
                 </li>
                 <li>
                   <label>Number</label>
@@ -50,9 +52,10 @@ const Edit = (props) => {
                       name="number"
                       defaultValue={data.number}
                       onChange={handleChange}
-                      required
+                      onBlur={handleValidation}
                     />
                   </div>
+                  {error.number && <p style={style}>Number is required</p>}
                 </li>
                 <li>
                   <label>Code</label>
@@ -64,9 +67,10 @@ const Edit = (props) => {
                       name="code"
                       defaultValue={data.code}
                       onChange={handleChange}
-                      required
+                      onBlur={handleValidation}
                     />
                   </div>
+                  {error.code && <p style={style}>Code is required</p>}
                 </li>
                 <li>
                   <label>Address</label>
@@ -78,9 +82,10 @@ const Edit = (props) => {
                       name="address"
                       defaultValue={data.address}
                       onChange={handleChange}
-                      required
+                      onBlur={handleValidation}
                     />
                   </div>
+                  {error.address && <p style={style}>Address is required</p>}
                 </li>
                 <li>
                   <label>City</label>
@@ -92,9 +97,10 @@ const Edit = (props) => {
                       name="city"
                       defaultValue={data.city}
                       onChange={handleChange}
-                      required
+                      onBlur={handleValidation}
                     />
                   </div>
+                  {error.city && <p style={style}>City is required</p>}
                 </li>
                 <li>
                   <label htmlFor="country">Country</label>
@@ -205,9 +211,11 @@ const Edit = (props) => {
                 <li>
                   <button
                     className="btn waves-effect red lighten-2 right"
+                    type="submit"
                   >
                     Update
                   </button>
+                  {isValid && <p style={style}>Please complete the form ...</p>}
                 </li>
               </ul>
             </form>
