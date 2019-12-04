@@ -39,7 +39,7 @@ class index extends Component {
         console.log(values)
         axios.post('http://devsrv.mindaperdana.com/test-api/public/api/user/login', values)
             .then(
-                (res) => this.props.history.push('/dashboard/' +res.data.id),
+                (res) => this.props.history.push('/dashboard'),
                 err => this.setState({error: err.response.data.message})
             )
         this.clearState()
