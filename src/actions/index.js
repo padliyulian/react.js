@@ -4,5 +4,6 @@ export {
   detAccount,
   addAccount,
   getCountrys,
-  updateAccount
+  updateAccount,
+  login
 } from "./account"

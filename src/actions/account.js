@@ -28,6 +28,14 @@ export const addAccount = (newAccount) => dispatch => {
   })
 }
 
+export const login = (data) => dispatch => {
+  axios.post('http://devsrv.mindaperdana.com/test-api/public/api/user/login', data)
+    .then(res => dispatch({
+      type: actionTypes.LOGIN,
+      data: res.data
+    }))
+}
+
 export const getCountrys = () => dispatch => {
   axios.get("https://restcountries.eu/rest/v2/all")
     .then(res => dispatch({
