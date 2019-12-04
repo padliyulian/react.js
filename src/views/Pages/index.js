@@ -1,9 +1,9 @@
 import Login from "./Login"
-import Admin from "./Admin"
+import Dashboard from "./Dashboard"
 import NotFound from "./Error/Notfound"
 
 export {
   Login,
-  Admin,
+  Dashboard,
   NotFound
 }

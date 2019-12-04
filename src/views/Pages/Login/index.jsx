@@ -16,30 +16,42 @@ const style = { color: 'red' }
 
 class index extends Component {
     state = {
-        email: '',
-        password: ''
+        login: {
+            email: '',
+            password: '',
+        },
+        error: ''
     }
 
     handleChange = (e) => {
         const {name, value} = e.target
-        this.setState({
-            [name] : value
+        this.setState(prevState => {
+            return {
+                login: {
+                    ...prevState.login,
+                    [name]: value
+                }
+            }
         })
     }
 
     handleSubmit = (values) => {
+        console.log(values)
         axios.post('http://devsrv.mindaperdana.com/test-api/public/api/user/login', values)
             .then(
-                () => this.props.history.push('/admin'),
-                err => console.log(err)
+                (res) => this.props.history.push('/dashboard/' +res.data.id),
+                err => this.setState({error: err.response.data.message})
             )
         this.clearState()
     }
     
     clearState = () => {
         this.setState({
-            email: '',
-            password: ''
+            login: {
+                email: '',
+                password: '',
+            },
+            error: ''
         })
     }
 
@@ -54,9 +66,10 @@ class index extends Component {
                 <div className="row">
                     <div className="col-12">
                         <div className="minda-login">
+                            {this.state.error ? (<p className="text-danger text-center">{this.state.error}</p>) : null}
                             <Formik
                                 enableReinitialize
-                                initialValues={this.state}
+                                initialValues={this.state.login}
                                 validationSchema={InputSchema}
                                 onSubmit={
                                     (values) => {
