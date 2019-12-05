@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { ReactTitle } from 'react-meta-tags'
 import axios from 'axios'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { login } from '../../../actions'
+import { setLogin } from '../../../actions'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from "yup"
 
@@ -39,7 +39,10 @@ class index extends Component {
         console.log(values)
         axios.post('http://devsrv.mindaperdana.com/test-api/public/api/user/login', values)
             .then(
-                (res) => this.props.history.push('/dashboard'),
+                (res) => {
+                    this.props.setLogin(true, res.data)
+                    this.props.history.push('/dashboard')
+                },
                 err => this.setState({error: err.response.data.message})
             )
         this.clearState()
@@ -99,13 +102,13 @@ class index extends Component {
     }
 }
 
-// index.propTypes = {
-//     login: PropTypes.func.isRequired
-// }
+index.propTypes = {
+    setLogin: PropTypes.func.isRequired
+}
 
 // index.contextTypes = {
 //     router: PropTypes.object.isRequired
 // }
 
-export default connect(null, { login })(index)
+export default connect(null, { setLogin })(index)
 

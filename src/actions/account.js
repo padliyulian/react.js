@@ -28,6 +28,20 @@ export const addAccount = (newAccount) => dispatch => {
   })
 }
 
+export const getStatus = () => dispatch => {
+  dispatch({
+    type: actionTypes.GET_STATUS
+  })
+}
+
+export const setLogin = (status, data) => dispatch => {
+  dispatch({
+    type: actionTypes.SET_LOGIN,
+    value: status,
+    user: data
+  })
+}
+
 export const login = (data) => dispatch => {
   axios.post('http://devsrv.mindaperdana.com/test-api/public/api/user/login', data)
     .then(res => dispatch({

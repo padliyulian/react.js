@@ -5,5 +5,8 @@ export {
   addAccount,
   getCountrys,
   updateAccount,
+  
+  getStatus,
+  setLogin,
   login
 } from "./account"

@@ -4,4 +4,7 @@ export const ADD_ACCOUNT = "ADD_ACCOUNT"
 export const DEL_ACCOUNT = "DEL_ACCOUNT"
 export const DETAIL_ACCOUNT = "DETAIL_ACCOUNT"
 export const UPDATE_ACCOUNT = "UPDATE_ACCOUNT"
+
+export const GET_STATUS = "GET_STATUS"
 export const LOGIN = "LOGIN"
+export const SET_LOGIN = "SET_LOGIN"

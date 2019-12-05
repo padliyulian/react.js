@@ -1,18 +1,18 @@
 import * as actionTypes from "../actions/types"
 
 const initState = {
-  countrys: [],
-  account: {}
+  loggedIn: false,
+  user: {}
 }
 
 export default function (state = initState, action) {
   switch (action.type) {
-    case actionTypes.GET_ACCOUNTS:
-      return {
-        ...state,
-        // accounts: action.payload
-        accounts: state.accounts
-      }
+    case actionTypes.GET_STATUS:
+        return {
+            ...state,
+            // accounts: action.payload
+            loggedIn: state.loggedIn
+        }
     case actionTypes.GET_COUNTRYS:
       return {
         ...state,
@@ -24,6 +24,12 @@ export default function (state = initState, action) {
         ...state,
         accounts: [...state.accounts, action.newAccount]
       }
+    case actionTypes.SET_LOGIN:
+        return {
+            ...state,
+            loggedIn: action.value,
+            user: action.user
+        }
     case actionTypes.DEL_ACCOUNT:
       let newAccounts = state.accounts.filter(account => account.id !== action.id)
       return {

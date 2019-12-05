@@ -9,10 +9,6 @@ import { NotFound } from "./views/Pages/"
 import PrivateRoute from "./PrivateRoute"
 
 export default class Router extends Component {
-    state = {
-        authed: false
-    }
-
     render() {
         return (
             <BrowserRouter>
@@ -27,7 +23,7 @@ export default class Router extends Component {
                 <main>
                   <Switch>
                     <Route exact path="/login" component={Login} />
-                    <PrivateRoute authed={this.state.authed} path='/dashboard' component={Dashboard} />
+                    <PrivateRoute path='/dashboard' component={Dashboard} />
                     <Route component={NotFound} />
                   </Switch>  
                 </main>
