@@ -3,9 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom"
 import MetaTags from "react-meta-tags"
 // import { Navbar } from "./components/layouts"
 // import { Footer } from "./components/layouts"
-import { Login } from "./views/Pages/"
-import { Dashboard } from "./views/Pages/"
-import { NotFound } from "./views/Pages/"
+import { Login, NotFound, Dashboard, Product  } from "./views/Pages/"
 import PrivateRoute from "./PrivateRoute"
 
 export default class Router extends Component {
@@ -24,6 +22,7 @@ export default class Router extends Component {
                   <Switch>
                     <Route exact path="/login" component={Login} />
                     <PrivateRoute path='/dashboard' component={Dashboard} />
+                    <PrivateRoute path='/product' component={Product} />
                     <Route component={NotFound} />
                   </Switch>  
                 </main>
