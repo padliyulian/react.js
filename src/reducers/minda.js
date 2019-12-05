@@ -8,9 +8,9 @@ const initState = {
         "email": "admin@localhost.com",
         "email_verified_at": null,
         "created_at": "2018-10-30 11:03:56",
-        "updated_at": "2019-12-05 06:54:46",
-        "token": "z25q47sJfrnDTSn3t4ot0zkiJzQ9q7bUFj6n2FYGMnC4zBUdBa8iPqCHoVqYnyZCXkszjrqK4xj6r9eLCHdcDz5u50ngIjlzozau"
-    }
+        "updated_at": "2019-12-05 14:01:23",
+        "token": "qfthUSysogvsZwYGrXIb08aga6sAbPulQAhHGEU0kCnnx9c8kGcNxIjDov5uy0NoY3cIu8pVNdLW6ubvEO1zn8HEkSXkx6UOia22"
+  }
 }
 
 export default function (state = initState, action) {
