@@ -98,7 +98,7 @@ class index extends Component {
             )
         } else {
             console.log('update')
-            let id = $('.js-id__update').val()
+            let id = parseInt($('.js-id__update').val())
             axios.patch(
                 `http://devsrv.mindaperdana.com/test-api/public/api/product/${id}`, values,
                 {

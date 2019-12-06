@@ -1,8 +1,16 @@
 import * as actionTypes from "../actions/types"
 
 const initState = {
-    loggedIn: false,
-    user: {}
+    loggedIn: true,
+    user: {
+      "id": 1,
+      "name": "admin",
+      "email": "admin@localhost.com",
+      "email_verified_at": null,
+      "created_at": "2018-10-30 11:03:56",
+      "updated_at": "2019-12-06 15:45:37",
+      "token": "lSLbvoTpPSfNig1CiKgVGB9uhawB8rDPeHLOf8JRpZMfA0E7t4cbyVqnBTpuoQ49fmoz1BRXGgCUKWOSWkGUKNHo71LSPrsGzF4s"
+  }
 }
 
 export default function (state = initState, action) {
