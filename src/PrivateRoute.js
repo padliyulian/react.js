@@ -7,6 +7,7 @@ class PrivateRoute extends Component {
     render() {
         const {component: Component, ...rest} = this.props
         console.log(this.props.loggedIn)
+        console.log(this.props.user)
         return (
             <Route
                 {...rest}
@@ -17,11 +18,13 @@ class PrivateRoute extends Component {
 }
 
 PrivateRoute.propTypes = {
-    loggedIn: PropTypes.bool.isRequired
+    loggedIn: PropTypes.bool.isRequired,
+    user: PropTypes.object.isRequired
 }
   
 const mapStateToProps = state => ({
-    loggedIn: state.minda.loggedIn
+    loggedIn: state.minda.loggedIn,
+    user: state.minda.user
 })
   
 export default connect(mapStateToProps, {})(PrivateRoute)

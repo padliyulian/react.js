@@ -7,6 +7,7 @@ import { Button, Modal  } from 'react-bootstrap'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import $ from 'jquery'
+import SweetAlert from 'react-bootstrap-sweetalert';
 import {
     ControlSidebar,
     Footer,
@@ -22,10 +23,12 @@ const InputSchema = Yup.object().shape({
 })
 
 const style = { color: 'red' }
+const styleNone = { display: 'none' }
 
 
 class index extends Component {
     state = {
+        alert: null,
         error: '',
         products: [],
         modal: false,
@@ -34,7 +37,7 @@ class index extends Component {
             name: '',
             description: '',
             price: ''
-        }
+        },
     }
 
     componentDidMount = () => {
@@ -72,25 +75,54 @@ class index extends Component {
 
     handleSubmit = (values) => {
         console.log(values)
-        axios.post(
-            'http://devsrv.mindaperdana.com/test-api/public/api/product', values,
-            {
-                headers: {
-                    "Accept" : "application/json",
-                    "Authorization": `Bearer ${this.props.user.token}` 
+        if ($('.js-modal__btn-save').text() === 'Save') {
+            console.log('save')
+            axios.post(
+                'http://devsrv.mindaperdana.com/test-api/public/api/product', values,
+                {
+                    headers: {
+                        "Accept" : "application/json",
+                        "Authorization": `Bearer ${this.props.user.token}` 
+                    }
                 }
-            }
-        )
-        .then(
-            (res) => {
-                this.setState(prevState => ({
-                    products: [...prevState.products, res.data]
-                }))
-            },
-            (err) => {
-                console.log(err.response.data.message)
-            }
-        )
+            )
+            .then(
+                (res) => {
+                    this.setState(prevState => ({
+                        products: [...prevState.products, res.data]
+                    }))
+                },
+                (err) => {
+                    console.log(err)
+                }
+            )
+        } else {
+            console.log('update')
+            let id = $('.js-id__update').val()
+            axios.patch(
+                `http://devsrv.mindaperdana.com/test-api/public/api/product/${id}`, values,
+                {
+                    headers: {
+                        "Accept" : "application/json",
+                        "Authorization": `Bearer ${this.props.user.token}` 
+                    }
+                }
+            )
+            .then(
+                () => {
+                    let products = this.state.products.filter(product => product.id !== id)
+                    this.setState({products: products})
+                    values.id = id
+                    this.setState(prevState => ({
+                        products: [...prevState.products, values]
+                    }))
+                },
+                (err) => {
+                    console.log(err)
+                }
+            )
+            console.log($('.js-id__update').val())
+        }
         this.clearState()
         this.handleModalClose()
     }
@@ -107,16 +139,94 @@ class index extends Component {
         })
     }
 
-    handleShow = (id) => {
-
+    handleShow = (id, e) => {
+        e.preventDefault()
+        let product = this.state.products.filter(product => product.id === id)  
+        this.handleModalShow()
+        setTimeout(function() {
+            $('.js-modal__body_add').hide()
+            $('.js-modal__btn-save').hide()
+            $('.js-modal__title').text('Detail Product')
+            $('.js-modal__body_show').show()
+            $('.js-modal__body_show').html(`
+                <p>ID : ${product[0].id}</p>
+                <p>Code : ${product[0].code}</p>
+                <p>Name : ${product[0].name}</p>
+                <p>Description : ${product[0].description}</p>
+                <p>Price : ${product[0].price}</p>
+            `)
+        }, 300)
     }
 
-    handleEdit = (id) => {
-
+    handleEdit = (id, e) => {
+        e.preventDefault()
+        let product = this.state.products.filter(product => product.id === id)
+        this.setState({
+            newProduct: {
+                code: product[0].code,
+                name: product[0].name,
+                description: product[0].description,
+                price: product[0].price
+            }
+        })
+        this.handleModalShow()
+        setTimeout(function() {
+            $('.js-modal__btn-save').text('Update')
+            $('.js-modal__title').text('Edit Product')
+            $('.js-modal__body_add').append(`<input value="${product[0].id}" type="hidden" class="js-id__update">`)
+        }, 300)
     }
 
-    handleDelete = (id) => {
+    handleDelete = (id, e) => {
+        e.preventDefault()
+        const getAlert = (id) => (
+            <SweetAlert
+                warning
+                showCancel
+                confirmBtnText="Yes, delete it!"
+                confirmBtnBsStyle="danger"
+                title="Are you sure?"
+                onConfirm={() => this.deleteProduct(id)}
+                onCancel={() => this.hideAlert()}
+                focusCancelBtn
+            >
+                You won't be able to revert this!
+            </SweetAlert>
+        )
 
+        this.setState({
+            alert: getAlert(id)
+        })
+    }
+
+    deleteProduct = (id) => {
+        console.log(id)
+        axios.delete(
+            `http://devsrv.mindaperdana.com/test-api/public/api/product/${id}`,
+            {
+                headers: {
+                    "Accept" : "application/json",
+                    "Authorization": `Bearer ${this.props.user.token}` 
+                }
+            }
+        )
+        .then(
+            () => {
+                let list = this.state.products.filter(product => product.id !== id)
+                this.setState({products: list})
+            },
+            (err) => {
+                console.log(err)
+            }
+        )
+
+        this.hideAlert()
+    }
+
+    hideAlert = () => {
+        this.setState({
+            alert: null
+        })
     }
 
     handleModalShow = () => {
@@ -142,7 +252,7 @@ class index extends Component {
                   <td>{product.description}</td>
                   <td>{product.price}</td>
                   <td>
-                    <a href="/" onClick={this.handleShow(product.id)}><i className="fas fa-eye"></i></a> <a href="/" onClick={this.handleEdit(product.id)} className="text-warning"><i className="fas fa-edit"></i></a> <a href="/" onClick={this.handleDelete(product.id)} className="text-danger"><i className="fas fa-trash"></i></a>
+                    <a href="/" onClick={(e) => this.handleShow(product.id, e)}><i className="fas fa-eye"></i></a> <a href="/" onClick={(e) => this.handleEdit(product.id, e)} className="text-warning"><i className="fas fa-edit"></i></a> <a href="/" onClick={(e) => this.handleDelete(product.id, e)} className="text-danger"><i className="fas fa-trash"></i></a>
                   </td>
                 </tr>
               )
@@ -171,7 +281,13 @@ class index extends Component {
                                         <div className="col">
                                             <div className="card">
                                                 <div className="card-header">
-                                                    header
+                                                    <h3 className="card-title">Product</h3>
+                                                    <div className="card-tools">
+                                                        <button type="button" className="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                                        <i className="fas fa-minus"></i></button>
+                                                        <button type="button" className="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                                                        <i className="fas fa-times"></i></button>
+                                                    </div>
                                                 </div>
                                                 <div className="card-body table-responsive">
                                                     <div className="col-12 d-flex justify-content-between px-md-0">
@@ -195,7 +311,6 @@ class index extends Component {
                                                     </table>
                                                 </div>
                                                 <div className="card-footer">
-                                                    foo
                                                 </div>
                                             </div>
                                         </div>
@@ -206,6 +321,7 @@ class index extends Component {
                         </div>  
                     </div>
 
+                    {this.state.alert}
                     <Modal show={this.state.modal} onHide={this.handleModalClose}>
                         <Formik
                             enableReinitialize
@@ -219,10 +335,13 @@ class index extends Component {
                         >
                             {(InputSchema) => (<Form>
                                 <Modal.Header closeButton>
-                                <Modal.Title>Add Product</Modal.Title>
+                                <Modal.Title><span className="js-modal__title">Add Product</span></Modal.Title>
                                 </Modal.Header>
                                 <Modal.Body>
-                                          
+                                
+                                <div className="js-modal__body_show" style={styleNone}>
+                                </div>
+                                <div className="js-modal__body_add">         
                                     <div className="form-group">
                                         <label htmlFor="code">Code</label>
                                         <Field className="form-control" value={InputSchema.values.code} onChange={this.handleChange} type="text" name="code" />
@@ -243,13 +362,13 @@ class index extends Component {
                                         <Field className="form-control" value={InputSchema.values.price} onChange={this.handleChange} type="text" name="price" />
                                         <ErrorMessage style={style} name="price" component="div"/>
                                     </div>
-                                
+                                </div>
                                 </Modal.Body>
                                 <Modal.Footer>
                                 <Button variant="secondary" onClick={this.handleModalClose}>
                                     Close
                                 </Button>
-                                <Button type="submit" variant="primary">
+                                <Button className="js-modal__btn-save" type="submit" variant="primary">
                                     Save
                                 </Button>
                                 </Modal.Footer>
@@ -266,9 +385,9 @@ class index extends Component {
 index.propTypes = {
     user: PropTypes.object.isRequired
 }
-  
+
 const mapStateToProps = state => ({
     user: state.minda.user
 })
-  
+
 export default connect(mapStateToProps, {})(index)

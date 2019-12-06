@@ -1,12 +1,20 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { setLogin } from '../../actions'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
-export default class Sidebar extends Component {
+class Sidebar extends Component {
   componentDidMount() {
     const script = document.createElement('script')
     script.src = 'js/script.js'
     script.async = true
     document.body.appendChild(script)
+  }
+
+  handleClick = (e) => {
+    e.preventDefault()
+    this.props.setLogin(false, {})
   }
 
   render() {
@@ -37,42 +45,25 @@ export default class Sidebar extends Component {
             with font-awesome or any other icon font library */}
                 <li className="nav-item">
                   <Link to="/dashboard" className="nav-link julian-link">
-                    <i className="nav-icon fa fa-dashboard" />
+                    <i className="fas fa-tachometer-alt nav-icon" />
                     <p>
                       Dashboard
                   </p>
                   </Link>
                 </li>
-                <li className="nav-item has-treeview">
-                  <a href="!#" className="nav-link">
-                    <i className="nav-icon fa fa-cogs" />
-                    <p>
-                      Management
-                    <i className="right fa fa-angle-left" />
-                    </p>
-                  </a>
-                  <ul className="nav nav-treeview">
-                    <li className="nav-item">
-                      <Link to="/product" className="nav-link julian-link">
-                        <i className="fa fa-users nav-icon" />
-                        <p>Product</p>
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link to="/admin/employees" className="nav-link julian-link">
-                        <i className="fa fa-users nav-icon" />
-                        <p>Employees</p>
-                      </Link>
-                    </li>
-                  </ul>
+                <li className="nav-item">
+                  <Link to="/product" className="nav-link julian-link">
+                    <i className="fa fa-users nav-icon" />
+                    <p>Product</p>
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <a href="!#" className="nav-link julian-link">
+                  <Link to="/login" className="nav-link julian-link" onClick={(e) => this.handleClick(e)}>
                     <i className="nav-icon fa fa-power-off" />
                     <p>
                       logout
-                  </p>
-                  </a>
+                    </p>
+                  </Link>
                 </li>
               </ul>
             </nav>
@@ -84,4 +75,11 @@ export default class Sidebar extends Component {
     )
   }
 }
+
+Sidebar.propTypes = {
+  setLogin: PropTypes.func.isRequired
+}
+
+
+export default connect(null, { setLogin })(Sidebar)
 

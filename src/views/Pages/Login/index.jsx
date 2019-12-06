@@ -80,7 +80,7 @@ class index extends Component {
                                     }
                                 }
                             > 
-                                {(InputSchema) => (<Form className="minda-login__form">
+                                {(InputSchema) => (<Form className="minda-login__form card">
                                     <div className="form-group">
                                         <label htmlFor="email">Email</label>
                                         <Field className="form-control" value={InputSchema.values.email} onChange={this.handleChange} type="text" name="email" />
@@ -91,7 +91,14 @@ class index extends Component {
                                         <Field className="form-control" value={InputSchema.values.password} onChange={this.handleChange} type="password" name="password" />
                                         <ErrorMessage style={style} name="password" component="div"/>
                                     </div>
-                                    <button type="submit" className="btn btn-outline-primary">Login</button> <button onClick={this.handleReset} type="reset" className="btn btn-outline-secondary">Reset</button>
+                                    <div className="row">
+                                        <div className="col-3">
+                                            <button type="submit" className="btn btn-outline-primary">Login</button>
+                                        </div>
+                                        <div className="col-3">
+                                            <button onClick={this.handleReset} type="reset" className="btn btn-outline-secondary">Reset</button>
+                                        </div>
+                                    </div>
                                 </Form>)}
                             </Formik>
                         </div>
