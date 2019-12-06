@@ -23,10 +23,10 @@ export default class Dashboard extends Component {
             {/* /.col */}
             <div className="col-12 col-sm-6 col-md-3">
               <div className="info-box mb-3">
-                <span className="info-box-icon bg-danger elevation-1"><i className="fa fa-google-plus" /></span>
+                <span className="info-box-icon bg-danger elevation-1"><i className="fas fa-tags"></i></span>
                 <div className="info-box-content">
-                  <span className="info-box-text">Likes</span>
-                  <span className="info-box-number">41,410</span>
+                  <span className="info-box-text">Total Jumlah Produk</span>
+                  <span className="info-box-number js-minda__jumproduk">41,410</span>
                 </div>
                 {/* /.info-box-content */}
               </div>

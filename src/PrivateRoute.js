@@ -11,7 +11,7 @@ class PrivateRoute extends Component {
         return (
             <Route
                 {...rest}
-                render={() => this.props.loggedIn === true ? <Component {...this.props} /> : <Redirect to={{pathname: '/login', state: {from: this.props.location}}} />}
+                render={() => this.props.loggedIn === true ? <Component {...this.props} /> : <Redirect to={{pathname: '/', state: {from: this.props.location}}} />}
             />
         )
     }

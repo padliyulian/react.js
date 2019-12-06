@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { ReactTitle } from 'react-meta-tags'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import axios from 'axios'
+import $ from 'jquery'
 import {
-    ContentHeader,
     ControlSidebar,
     Dashboard,
     Footer,
@@ -12,28 +13,42 @@ import {
 } from '../../Layouts'
 
 class index extends Component {
+    state = {
+        products: null
+    }
+
+    componentDidMount = () => {
+        axios.get(
+            'http://devsrv.mindaperdana.com/test-api/public/api/dashboard',
+            {
+                headers: {
+                    "Accept" : "application/json",
+                    "Authorization": `Bearer ${this.props.user.token}` 
+                }
+            }
+        )
+        .then(
+            (res) => {
+                this.setState({products: res.data.products})
+                console.log(this.state.products)
+                setTimeout(() => $('.js-minda__jumproduk').text(this.state.products), 300)
+            },
+            (err) => {
+                console.log(err.data)
+            }
+        )
+    }
+
     render() {
         return (
             <React.Fragment>
                 <Navbar />
                 <Sidebar />
                     <div className="content-wrapper">
-                        <div className="content">
+                        <div className="content pt-4">
 
-                            <div>
-                                <ReactTitle title='Admin | Dashboard' />
-                                {/* <div className="row">
-                                    <div className="col-12">
-                                        <h4>admin dashboard</h4>
-                                        <p>{this.props.user.id}</p>
-                                        <p>{this.props.user.name}</p>
-                                        <p>{this.props.user.email}</p>
-                                        <p>{this.props.user.token}</p>
-                                    </div>
-                                </div>   */}
-                                <ContentHeader />
-                                <Dashboard />
-                            </div>
+                            <ReactTitle title='Admin | Dashboard' />
+                            <Dashboard />
 
                         </div>  
                     </div>

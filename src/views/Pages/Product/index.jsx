@@ -91,6 +91,20 @@ class index extends Component {
                     this.setState(prevState => ({
                         products: [...prevState.products, res.data]
                     }))
+
+                    const getAlert = () => (
+                        <SweetAlert
+                            success
+                            title="Success!"
+                            onConfirm={() => this.hideAlert()}
+                            >
+                                The data has been saved.
+                            </SweetAlert>
+                    )
+            
+                    this.setState({
+                        alert: getAlert()
+                    })
                 },
                 (err) => {
                     console.log(err)
@@ -116,6 +130,20 @@ class index extends Component {
                     this.setState(prevState => ({
                         products: [...prevState.products, values]
                     }))
+
+                    const getAlert = () => (
+                        <SweetAlert
+                            success
+                            title="Success!"
+                            onConfirm={() => this.hideAlert()}
+                            >
+                                The data has been updated.
+                            </SweetAlert>
+                    )
+            
+                    this.setState({
+                        alert: getAlert()
+                    })
                 },
                 (err) => {
                     console.log(err)
@@ -221,6 +249,19 @@ class index extends Component {
         )
 
         this.hideAlert()
+        const getAlert = () => (
+            <SweetAlert
+                success
+                title="Success!"
+                onConfirm={() => this.hideAlert()}
+                >
+                    The data has been deleted.
+                </SweetAlert>
+        )
+
+        this.setState({
+            alert: getAlert()
+        })
     }
 
     hideAlert = () => {

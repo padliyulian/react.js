@@ -58,7 +58,7 @@ class Sidebar extends Component {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/login" className="nav-link julian-link" onClick={(e) => this.handleClick(e)}>
+                  <Link to="/" className="nav-link julian-link" onClick={(e) => this.handleClick(e)}>
                     <i className="nav-icon fa fa-power-off" />
                     <p>
                       logout
